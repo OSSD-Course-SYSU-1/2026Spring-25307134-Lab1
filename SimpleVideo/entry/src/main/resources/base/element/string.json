@@ -1,0 +1,64 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "module description"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "SimpleVideo"
+    },
+    {
+      "name": "secondPage",
+      "value": "pages/play"
+    },
+    {
+      "name": "slider_startTime",
+      "value": "00:00"
+    },
+    {
+      "name": "back",
+      "value": "视频"
+    },
+    {
+      "name": "empty",
+      "value": "empty"
+    },
+    {
+      "name": "reason",
+      "value": "Allow applications to use the Internet network in video player scenarios."
+    },
+    {
+      "name": "message",
+      "value": "请检查网络"
+    },
+    {
+      "name": "RECENT",
+      "value": "最近播放"
+    },
+    {
+      "name": "RECOMMEND",
+      "value": "为你推荐"
+    },
+    {
+      "name": "net_video",
+      "value": "网络视频地址*****"
+    },
+    {
+      "name": "video_first",
+      "value": "视频1"
+    },
+    {
+      "name": "video_second",
+      "value": "视频2"
+    },
+    {
+      "name": "video_third",
+      "value": "视频3"
+    }
+  ]
+}
