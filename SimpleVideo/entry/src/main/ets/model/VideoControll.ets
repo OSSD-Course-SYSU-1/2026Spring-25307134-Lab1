@@ -18,7 +18,8 @@ import {
   COMMON_NUM_DOUBLE,
   ZERO_STR,
   SPLIT,
-  STACK_STYLE
+  STACK_STYLE,
+  PLAYBACK_SPEEDS
 } from '../common/constants/CommonConstants';
 import { VideoPlayerModel } from './VideoPlayerModel';
 import { DurationObject } from '../view/VideoPlayer';
@@ -111,4 +112,12 @@ export function iconOnclick(model: VideoPlayerModel) {
       }
     }, STACK_STYLE.MILLI_SECONDS);
   }
+}
+
+/**
+ * switch playback speed, cycle through options
+ */
+export function changeSpeed(model: VideoPlayerModel) {
+  model.speedIndex = (model.speedIndex + 1) % PLAYBACK_SPEEDS.length;
+  model.curRate = PLAYBACK_SPEEDS[model.speedIndex];
 }

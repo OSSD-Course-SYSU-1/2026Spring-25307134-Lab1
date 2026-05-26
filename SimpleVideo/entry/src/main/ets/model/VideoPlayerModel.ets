@@ -25,5 +25,7 @@ export class VideoPlayerModel {
   public flag: boolean = false;
   public isLoading: boolean = false;
   public progressVal: number = 0;
+  public curRate: PlaybackSpeed = PlaybackSpeed.Speed_Forward_1_00_X;
+  public speedIndex: number = 0;
   public controller: VideoController = new VideoController();
 }

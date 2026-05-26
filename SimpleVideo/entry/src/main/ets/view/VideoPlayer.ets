@@ -29,6 +29,7 @@ import { VideoPlayerModel } from '../model/VideoPlayerModel';
 @Component
 export struct VideoPlayer {
   @Consume private videoPlayerModel: VideoPlayerModel;
+  @StorageLink('curRate') curRate: PlaybackSpeed = PlaybackSpeed.Speed_Forward_1_00_X;
   private previewUris: Resource = $r('app.media.preview');
   source: ResourceStr = '';
 
@@ -37,7 +38,8 @@ export struct VideoPlayer {
       Video({
         src: this.source,
         previewUri: this.previewUris,
-        controller: this.videoPlayerModel.controller
+        controller: this.videoPlayerModel.controller,
+        currentProgressRate: this.curRate
       })
         .width(ALL_PERCENT)
         .height(STRING_PERCENT.NINETY_PERCENT)

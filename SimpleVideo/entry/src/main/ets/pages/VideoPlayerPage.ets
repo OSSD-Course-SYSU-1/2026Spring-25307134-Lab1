@@ -18,9 +18,12 @@ import {
   MARGIN_FONT_SIZE,
   COMMON_NUM_FONT_WEIGHT,
   ALL_PERCENT,
-  STACK_STYLE
+  STACK_STYLE,
+  SPEED_LABELS,
+  PLAYBACK_SPEEDS
 } from '../common/constants/CommonConstants';
 import { VideoPlayerModel } from '../model/VideoPlayerModel';
+import { iconOnclick } from '../model/VideoControll';
 
 @Builder
 export function VideoPlayerPageBuilder() {
@@ -37,6 +40,7 @@ export struct VideoPlayerPage {
   @Provide videoPlayerModel: VideoPlayerModel = new VideoPlayerModel();
   private pathStack: NavPathStack = new NavPathStack();
   @StorageLink('source') source: ResourceStr = '';
+  @StorageLink('curRate') curRate: PlaybackSpeed = PlaybackSpeed.Speed_Forward_1_00_X;
 
   onPageHide() {
     this.videoPlayerModel.controller.pause();
@@ -64,6 +68,24 @@ export struct VideoPlayerPage {
         top: MARGIN_FONT_SIZE.FIRST_MARGIN
       })
       .justifyContent(FlexAlign.Start)
+
+      Row({ space: 8 }) {
+        ForEach(SPEED_LABELS, (label: string, index: number) => {
+          Text(label)
+            .fontSize(12)
+            .fontColor(this.videoPlayerModel.speedIndex === index ? '#FFD700' : '#99FFFFFF')
+            .fontWeight(this.videoPlayerModel.speedIndex === index ? FontWeight.Bold : FontWeight.Regular)
+            .padding({ left: 6, right: 6, top: 2, bottom: 2 })
+            .onClick(() => {
+              this.videoPlayerModel.speedIndex = index;
+              this.videoPlayerModel.curRate = PLAYBACK_SPEEDS[index];
+              this.curRate = PLAYBACK_SPEEDS[index];
+            })
+        })
+      }
+      .width(ALL_PERCENT)
+      .justifyContent(FlexAlign.Center)
+      .margin({ right: 16, top: 8 })
 
       Stack() {
         if (!this.videoPlayerModel.isPlay && !this.videoPlayerModel.isLoading) {
@@ -94,6 +116,9 @@ export struct VideoPlayerPage {
           .zIndex(0)
 
       }
+      .onClick(() => {
+        iconOnclick(this.videoPlayerModel);
+      })
     }
     .hideTitleBar(true)
     .hideToolBar(true)

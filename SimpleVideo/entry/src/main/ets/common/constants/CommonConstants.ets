@@ -127,6 +127,21 @@ export const enum VIDEO_TYPE {
 }
 
 /**
+ * playback speed labels
+ */
+export const SPEED_LABELS: string[] = ['1.0x', '1.25x', '1.75x', '2.0x'];
+
+/**
+ * playback speed enum mapping by index
+ */
+export const PLAYBACK_SPEEDS: PlaybackSpeed[] = [
+  PlaybackSpeed.Speed_Forward_1_00_X,
+  PlaybackSpeed.Speed_Forward_1_25_X,
+  PlaybackSpeed.Speed_Forward_1_75_X,
+  PlaybackSpeed.Speed_Forward_2_00_X
+];
+
+/**
  * Attribute Styles in a Stack Layout
  */
 export const enum STACK_STYLE {
