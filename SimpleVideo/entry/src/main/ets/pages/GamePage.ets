@@ -94,14 +94,14 @@ struct GamePage {
   private hintTimer?: number;
 
   aboutToAppear(): void {
-    // 先同步初始化棋盘，确保首次 build() 有完整数据
-    this.setupLevel();
-    // 异步加载存档（不影响首帧渲染）
-    this.loadProgress();
-    // ── 跨设备迁移恢复 ──
+    // ── 跨设备迁移恢复优先（必须在 setupLevel 之前，否则会被覆盖） ──
     const restored = GameStateBridge.consumePendingRestore();
     if (restored) {
       this.restoreState(restored);
+    } else {
+      // 正常冷启动：生成棋盘后再异步加载存档进度
+      this.setupLevel();
+      this.loadProgress();
     }
   }
 
