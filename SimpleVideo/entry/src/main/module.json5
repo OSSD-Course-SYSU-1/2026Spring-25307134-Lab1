@@ -5,12 +5,14 @@
     "description": "$string:module_desc",
     "mainElement": "EntryAbility",
     "deviceTypes": [
-      "phone"
+      "phone",
+      "tablet",
+      "2in1"
     ],
     "deliveryWithInstall": true,
     "installationFree": false,
+    "continuable": true,
     "pages": "$profile:main_pages",
-    "routerMap": "$profile:route_map",
     "abilities": [
       {
         "name": "EntryAbility",
@@ -21,6 +23,7 @@
         "startWindowIcon": "$media:icon",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
+        "continuable": true,
         "skills": [
           {
             "entities": [
@@ -33,17 +36,6 @@
         ]
       }
     ],
-    "requestPermissions": [
-      {
-        "name": "ohos.permission.INTERNET",
-        "usedScene": {
-          "when": "inuse",
-          "abilities": [
-            "EntryAbility"
-          ]
-        },
-        "reason": "$string:reason"
-      }
-    ]
+    "requestPermissions": []
   }
 }
