@@ -38,6 +38,21 @@ export interface ContinuationState {
   undoStack: GameSnapshot[];
 }
 
+const MAX_UNDO_SNAPSHOTS = 50;
+
+/** 安全地从 want params 取值并转为字符串 */
+function paramStr(params: Record<string, Object>, key: string): string {
+  const v = params[key];
+  if (typeof v === 'string') return v;
+  if (v === undefined || v === null) return '';
+  return String(v);
+}
+
+/** 安全解析整数，非法值返回 NaN（由调用方验证） */
+function paramInt(params: Record<string, Object>, key: string): number {
+  return parseInt(paramStr(params, key));
+}
+
 export const GameStateBridge = {
   current: null as ContinuationState | null,
   pendingRestore: null as ContinuationState | null,
@@ -63,28 +78,57 @@ export const GameStateBridge = {
     wantParam[CONT_KEY_STARS] = s.stars.toString();
     wantParam[CONT_KEY_FLOODED_MASK] = JSON.stringify(s.floodedMask);
     wantParam[CONT_KEY_INITIAL_GRID] = JSON.stringify(s.initialGrid);
-    const undoSnapshots = s.undoStack.slice(-50);
-    wantParam[CONT_KEY_UNDO_STACK] = JSON.stringify(undoSnapshots);
+    wantParam[CONT_KEY_UNDO_STACK] = JSON.stringify(s.undoStack.slice(-MAX_UNDO_SNAPSHOTS));
   },
 
   /** EntryAbility 启动时调用：从 want.parameters 解析迁移数据 */
   loadFromParams(params: Record<string, Object>): void {
     if (!params || params[CONT_DATA_MARKER] === undefined) return;
     try {
+      const gameMode = paramInt(params, CONT_KEY_GAME_MODE);
+      const currentLevel = paramInt(params, CONT_KEY_CURRENT_LEVEL);
+      const infiniteLevel = paramInt(params, CONT_KEY_INFINITE_LEVEL);
+      const gridSize = paramInt(params, CONT_KEY_GRID_SIZE);
+      const activeColorCount = paramInt(params, CONT_KEY_COLOR_COUNT);
+      const steps = paramInt(params, CONT_KEY_STEPS);
+      const originColor = paramInt(params, CONT_KEY_ORIGIN_COLOR);
+      const optimalSteps = paramInt(params, CONT_KEY_OPTIMAL_STEPS);
+      const stars = paramInt(params, CONT_KEY_STARS);
+
+      // 验证所有整数解析有效
+      const ints = [gameMode, currentLevel, infiniteLevel, gridSize,
+                    activeColorCount, steps, originColor, optimalSteps, stars];
+      if (ints.some((n: number) => !Number.isFinite(n))) {
+        this.pendingRestore = null;
+        return;
+      }
+
+      const grid = JSON.parse(paramStr(params, CONT_KEY_GRID));
+      const floodedMask = JSON.parse(paramStr(params, CONT_KEY_FLOODED_MASK));
+      const initialGrid = JSON.parse(paramStr(params, CONT_KEY_INITIAL_GRID));
+      const undoStack = JSON.parse(paramStr(params, CONT_KEY_UNDO_STACK));
+
+      // 基本形状验证
+      if (!Array.isArray(grid) || !Array.isArray(floodedMask) ||
+          !Array.isArray(initialGrid) || !Array.isArray(undoStack)) {
+        this.pendingRestore = null;
+        return;
+      }
+
       this.pendingRestore = {
-        gameMode: parseInt(params[CONT_KEY_GAME_MODE] as string),
-        currentLevel: parseInt(params[CONT_KEY_CURRENT_LEVEL] as string),
-        infiniteLevel: parseInt(params[CONT_KEY_INFINITE_LEVEL] as string),
-        grid: JSON.parse(params[CONT_KEY_GRID] as string),
-        gridSize: parseInt(params[CONT_KEY_GRID_SIZE] as string),
-        activeColorCount: parseInt(params[CONT_KEY_COLOR_COUNT] as string),
-        steps: parseInt(params[CONT_KEY_STEPS] as string),
-        originColor: parseInt(params[CONT_KEY_ORIGIN_COLOR] as string),
-        optimalSteps: parseInt(params[CONT_KEY_OPTIMAL_STEPS] as string),
-        stars: parseInt(params[CONT_KEY_STARS] as string),
-        floodedMask: JSON.parse(params[CONT_KEY_FLOODED_MASK] as string),
-        initialGrid: JSON.parse(params[CONT_KEY_INITIAL_GRID] as string),
-        undoStack: JSON.parse(params[CONT_KEY_UNDO_STACK] as string),
+        gameMode: gameMode,
+        currentLevel: currentLevel,
+        infiniteLevel: infiniteLevel,
+        grid: grid,
+        gridSize: gridSize,
+        activeColorCount: activeColorCount,
+        steps: steps,
+        originColor: originColor,
+        optimalSteps: optimalSteps,
+        stars: stars,
+        floodedMask: floodedMask,
+        initialGrid: initialGrid,
+        undoStack: undoStack,
       };
     } catch (e) {
       this.pendingRestore = null;
