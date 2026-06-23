@@ -13,51 +13,63 @@
  * limitations under the License.
  */
 
-import { UIAbility } from '@kit.AbilityKit';
+import { UIAbility, Want, AbilityConstant } from '@kit.AbilityKit';
 import { window } from '@kit.ArkUI';
 import { hilog } from '@kit.PerformanceAnalysisKit';
+import { GameStateBridge } from '../models/GameStateBridge';
 
 export default class EntryAbility extends UIAbility {
-  onCreate() {
+  onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
+    // 检查是否从跨设备迁移冷启动
+    const params = want.parameters as Record<string, Object>;
+    if (params) {
+      GameStateBridge.loadFromParams(params);
+    }
   }
 
-  onDestroy() {
-    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+  onDestroy(): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
   }
 
-  onWindowStageCreate(windowStage: window.WindowStage) {
-    // Main window is created, set main page for this ability
-    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+  onWindowStageCreate(windowStage: window.WindowStage): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
-    windowStage.loadContent('pages/VideoListPage', (err, data) => {
+    // 不再强制横屏 — 由系统根据设备传感器自动决定方向
+    windowStage.loadContent('pages/GamePage', (err, data) => {
       if (err.code) {
-        hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.ERROR);
-        hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
+        hilog.error(0x0000, 'testTag', 'Failed to load content: %{public}s', JSON.stringify(err) ?? '');
         return;
       }
-      hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
-      hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
+      hilog.info(0x0000, 'testTag', 'Succeeded in loading content: %{public}s', JSON.stringify(data) ?? '');
     });
   }
 
-  onWindowStageDestroy() {
-    // Main window is destroyed, release UI related resources
-    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+  onWindowStageDestroy(): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageDestroy');
   }
 
-  onForeground() {
-    // Ability has brought to foreground
-    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+  onForeground(): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onForeground');
   }
 
-  onBackground() {
-    // Ability has back to background
-    hilog.isLoggable(0x0000, 'testTag', hilog.LogLevel.INFO);
+  onBackground(): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onBackground');
+  }
+
+  // ── 跨设备迁移 ──
+
+  onContinue(wantParam: Record<string, Object>): AbilityConstant.OnContinueResult {
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onContinue');
+    GameStateBridge.writeToWantParam(wantParam);
+    return AbilityConstant.OnContinueResult.AGREE;
+  }
+
+  onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onNewWant');
+    const params = want.parameters as Record<string, Object>;
+    if (params) {
+      GameStateBridge.loadFromParams(params);
+    }
   }
 }
