@@ -68,18 +68,20 @@ export const BP_MD_MAX: number = 840;  // < 840vp → MD, ≥ 840vp → LG
 // ── 断点参数 ──
 export function hudHeightForBp(bp: number): number {
   if (bp === BP_SM) return 60;
-  if (bp === BP_MD) return 80;
-  return 96;
+  if (bp === BP_LG) return 96;
+  return 80; // MD 兜底
 }
 
 export function boardFlexForBp(bp: number): number {
   if (bp === BP_LG) return 6.5;
-  return 6;
+  if (bp === BP_SM) return 6;
+  return 6; // MD 兜底
 }
 
 export function paletteFlexForBp(bp: number): number {
   if (bp === BP_LG) return 3.5;
-  return 4;
+  if (bp === BP_SM) return 4;
+  return 4; // MD 兜底
 }
 
 // ── 调色板排列方向 ──
@@ -100,4 +102,4 @@ export const CONT_KEY_STARS: string = 'fc_stars';
 export const CONT_KEY_FLOODED_MASK: string = 'fc_mask';
 export const CONT_KEY_INITIAL_GRID: string = 'fc_initgrid';
 export const CONT_KEY_UNDO_STACK: string = 'fc_undo';
-export const CONT_DATA_MARKER: string = 'fc_gamemode'; // 用于检测迁移数据是否存在
+export const CONT_DATA_MARKER: string = 'fc_data_exists'; // 用于检测迁移数据是否存在
