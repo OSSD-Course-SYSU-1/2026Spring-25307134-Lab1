@@ -1,0 +1,12 @@
+{
+  "routerMap": [
+    {
+      "name": "VideoPlayerPage",
+      "pageSourceFile": "src/main/ets/pages/VideoPlayerPage.ets",
+      "buildFunction": "VideoPlayerPageBuilder",
+      "data": {
+        "description" : "this is VideoPlayerPage"
+      }
+    }
+  ]
+}
