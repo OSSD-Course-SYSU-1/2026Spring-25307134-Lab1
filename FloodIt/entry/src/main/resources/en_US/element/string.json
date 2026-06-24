@@ -1,0 +1,26 @@
+{
+  "string": [
+    { "name": "module_desc", "value": "Flood-It game module" },
+    { "name": "EntryAbility_desc", "value": "Flood-It main screen" },
+    { "name": "EntryAbility_label", "value": "Flood-It" },
+    { "name": "game_title", "value": "Flood-It" },
+    { "name": "level_mode", "value": "Level Mode" },
+    { "name": "infinite_mode", "value": "Infinite Mode" },
+    { "name": "steps_label", "value": "Steps" },
+    { "name": "btn_undo", "value": "Undo" },
+    { "name": "btn_reset", "value": "Reset" },
+    { "name": "btn_hint", "value": "Hint" },
+    { "name": "btn_new_game", "value": "New Game" },
+    { "name": "victory_title", "value": "Congratulations!" },
+    { "name": "star_rating", "value": "Star Rating" },
+    { "name": "optimal_label", "value": "Optimal" },
+    { "name": "your_steps", "value": "Your Steps" },
+    { "name": "btn_next_level", "value": "Next Level" },
+    { "name": "btn_replay", "value": "Replay" },
+    { "name": "btn_back_menu", "value": "Back to Menu" },
+    { "name": "level_prefix", "value": "Level " },
+    { "name": "level_suffix", "value": "" },
+    { "name": "sound_on", "value": "Sound: ON" },
+    { "name": "sound_off", "value": "Sound: OFF" }
+  ]
+}

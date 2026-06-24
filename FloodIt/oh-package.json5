@@ -1,0 +1,13 @@
+{
+  "modelVersion": "5.0.0",
+  "license": "",
+  "devDependencies": {
+    "@ohos/hypium": "1.0.15"
+  },
+  "author": "",
+  "name": "floodit",
+  "description": "Flood-It color flooding puzzle game",
+  "main": "",
+  "version": "1.0.0",
+  "dependencies": {}
+}

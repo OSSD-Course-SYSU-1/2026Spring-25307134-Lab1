@@ -1,0 +1,26 @@
+{
+  "string": [
+    { "name": "module_desc", "value": "溢彩画游戏模块" },
+    { "name": "EntryAbility_desc", "value": "溢彩画主界面" },
+    { "name": "EntryAbility_label", "value": "溢彩画" },
+    { "name": "game_title", "value": "溢彩画" },
+    { "name": "level_mode", "value": "关卡模式" },
+    { "name": "infinite_mode", "value": "无尽模式" },
+    { "name": "steps_label", "value": "步数" },
+    { "name": "btn_undo", "value": "撤销" },
+    { "name": "btn_reset", "value": "重置" },
+    { "name": "btn_hint", "value": "提示" },
+    { "name": "btn_new_game", "value": "新游戏" },
+    { "name": "victory_title", "value": "恭喜过关！" },
+    { "name": "star_rating", "value": "星级评价" },
+    { "name": "optimal_label", "value": "最优" },
+    { "name": "your_steps", "value": "你的步数" },
+    { "name": "btn_next_level", "value": "下一关" },
+    { "name": "btn_replay", "value": "重玩" },
+    { "name": "btn_back_menu", "value": "返回菜单" },
+    { "name": "level_prefix", "value": "第" },
+    { "name": "level_suffix", "value": "关" },
+    { "name": "sound_on", "value": "音效: 开" },
+    { "name": "sound_off", "value": "音效: 关" }
+  ]
+}

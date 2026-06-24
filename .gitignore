@@ -2,3 +2,6 @@ oh_modules/
 .hvigor/
 .idea/
 build/
+.preview/
+.agents/
+skills-lock.json

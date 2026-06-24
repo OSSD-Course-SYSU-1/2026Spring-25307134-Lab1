@@ -1,0 +1,14 @@
+{
+  "integer": [
+    { "name": "cell_size_small", "value": 42 },
+    { "name": "cell_size_medium", "value": 36 },
+    { "name": "cell_size_large", "value": 30 },
+    { "name": "cell_margin", "value": 2 },
+    { "name": "cell_radius", "value": 6 },
+    { "name": "palette_button_size", "value": 56 },
+    { "name": "hud_font_size", "value": 16 },
+    { "name": "title_font_size", "value": 24 },
+    { "name": "button_height", "value": 40 },
+    { "name": "button_radius", "value": 20 }
+  ]
+}
